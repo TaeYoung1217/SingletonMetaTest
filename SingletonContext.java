@@ -18,15 +18,15 @@ public class SingletonContext {
     static synchronized Object getSingleton(String name) {
         //TODO: 아래 구문 삭제 후, Map을 이용한 Singleton 생성 로직 구현 필요합니다.
         Object object = singletonObjectMap.get(name);
-        if (object == null) {
+        if (object == null) { //singletonObjectMap에 키에 해당하는 값이 없으면
             try {
-                object = singletonMap.get(name).invoke(config);
+                object = singletonMap.get(name).invoke(config); //새로 생성
                 singletonObjectMap.put(name, object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return object;
+        return object; //있으면 있는 object 그대로 return, 없으면 위에 if문에서 생성 후 return
     }
 
     public static void executeMethodsBySingletonAnnotation(Object object) {
