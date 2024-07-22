@@ -20,8 +20,9 @@ public class SingletonContext {
         Object object = singletonObjectMap.get(name);
         if (object == null) { //singletonObjectMap에 키에 해당하는 값이 없으면
             try {
-                object = singletonMap.get(name).invoke(config); //새로 생성
-                singletonObjectMap.put(name, object);
+                object = singletonMap.get(name).invoke(config);
+                //singletonMap에서 키에 해당하는 메소드 가져와서 config객체에 있는 메소드 실행(invoke)
+                singletonObjectMap.put(name, object); //singletonObjectMap에 put
             } catch (Exception e) {
                 e.printStackTrace();
             }
