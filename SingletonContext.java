@@ -34,15 +34,15 @@ public class SingletonContext {
         // TODO - 1: Object 가 들어 오면 해당 클래스의 Method를 돌면서, @Singleton annotation을 발견합니다.
         // TODO - 2: 해당 Annotation의 name 과 method를 적당한 Map에 저장합니다.
 
-        Class clazz = object.getClass();
-        Method[] methods = clazz.getDeclaredMethods();
+        Class clazz = object.getClass(); //object를 받아오기 위한 Class 클래스 생성 후 getClass로 클래스 확인
+        Method[] methods = clazz.getDeclaredMethods(); //모든 메소드 가져오기
 
-        for (Method method : methods) {
-            Annotation[] annotations = method.getDeclaredAnnotations();
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof Singleton) {
-                    Singleton singleton = (Singleton) annotation;
-                    singletonMap.put(singleton.name(), method);
+        for (Method method : methods) { //모든 메소드를 반복문 돌며
+            Annotation[] annotations = method.getDeclaredAnnotations(); //메소드에 붙은 어노테이션 가져와서
+            for (Annotation annotation : annotations) { //모든 어노테이션 돌며
+                if (annotation instanceof Singleton) { //어노테이션이 Singleton 어노테이션이면
+                    Singleton singleton = (Singleton) annotation; //Singleton 어노테이션 객체 생성
+                    singletonMap.put(singleton.name(), method); //singleton 객체의 이름과 메소드 저장
                 }
             }
         }
