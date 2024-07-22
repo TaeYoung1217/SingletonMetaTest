@@ -17,7 +17,16 @@ public class SingletonContext {
 
     static synchronized Object getSingleton(String name) {
         //TODO: 아래 구문 삭제 후, Map을 이용한 Singleton 생성 로직 구현 필요합니다.
-        return singletonObjectMap.get(name);
+        Object object = singletonObjectMap.get(name);
+        if (object == null) {
+            try {
+                object = singletonMap.get(name).invoke(config);
+                singletonObjectMap.put(name, object);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return object;
     }
 
     public static void executeMethodsBySingletonAnnotation(Object object) {
@@ -33,12 +42,6 @@ public class SingletonContext {
                 if (annotation instanceof Singleton) {
                     Singleton singleton = (Singleton) annotation;
                     singletonMap.put(singleton.name(), method);
-                    try {
-                        singletonObjectMap.put(singleton.name(), method.invoke(object));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
                 }
             }
         }
